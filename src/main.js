@@ -4,6 +4,14 @@ var coverTitle = document.querySelector('.cover-title');
 var coverDescriptors1 = document.querySelector('.tagline-1');
 var coverDescriptors2 = document.querySelector('.tagline-2');
 var randomCoverButton = document.querySelector('.random-cover-button');
+var makeNewButton = document.querySelector('.make-new-button');
+var homeButton = document.querySelector('.home-button');
+var formView = document.querySelector('.form-view');
+var homeView = document.querySelector('.home-view');
+var randomCoverButton = document.querySelector('.random-cover-button');
+var saveCoverButton = document.querySelector('.save-cover-button');
+var viewSavedButton = document.querySelector('.view-saved-button');
+var savedView = document.querySelector('.saved-view');
 
 // We've provided a few variables below
 var savedCovers = [
@@ -14,6 +22,9 @@ var currentCover;
 // Add your event listeners here 👇
 window.addEventListener('load', getRandomCover);
 randomCoverButton.addEventListener('click', getRandomCover);
+makeNewButton.addEventListener('click', showFormView);
+viewSavedButton.addEventListener('click', showSavedView);
+homeButton.addEventListener('click', showHomeView);
 
 // Create your event handlers and other functions here 👇
 
@@ -39,4 +50,32 @@ function getRandomCover() {
   coverTitle.innerText = titles[getRandomIndex(titles)]
   coverDescriptors1.innerText = descriptors[getRandomIndex(descriptors)]
   coverDescriptors2.innerText = descriptors[getRandomIndex(descriptors)]
+};
+
+function showElements(elements) {
+  elements.forEach(function(element) {
+    element.classList.remove('hidden')
+  })
+};
+
+function hideElements(elements) {
+  elements.forEach(function(element) {
+    element.classList.add('hidden')
+  })
+};
+
+function showFormView() {
+  hideElements([homeView, randomCoverButton, saveCoverButton])
+  showElements([formView, homeButton])
+};
+
+function showSavedView() {
+  hideElements([homeView, randomCoverButton, saveCoverButton])
+  showElements([savedView, homeButton])
+};
+
+function showHomeView() {
+  hideElements([formView, savedView])
+  showElements([homeView, randomCoverButton, saveCoverButton])
+  hideElements([homeButton])
 };
