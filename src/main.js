@@ -1,5 +1,8 @@
 // Create variables targetting the relevant DOM elements here 👇
-
+var coverImage = document.querySelector('.cover-image');
+var coverTitle = document.querySelector('.cover-title');
+var coverDescriptors1 = document.querySelector('.tagline-1');
+var coverDescriptors2 = document.querySelector('.tagline-2');
 
 // We've provided a few variables below
 var savedCovers = [
@@ -8,7 +11,7 @@ var savedCovers = [
 var currentCover;
 
 // Add your event listeners here 👇
-
+window.addEventListener('load', getRandomCover)
 
 // Create your event handlers and other functions here 👇
 
@@ -28,3 +31,11 @@ function createCover(imgSrc, title, descriptor1, descriptor2) {
   }
   return cover
 }
+
+function getRandomCover() {
+  coverImage.src = covers[getRandomIndex(covers)]
+  coverTitle.innerText = titles[getRandomIndex(titles)]
+  coverDescriptors1.innerText = descriptors[getRandomIndex(descriptors)]
+  coverDescriptors2.innerText = descriptors[getRandomIndex(descriptors)]
+    
+    }
