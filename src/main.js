@@ -8,10 +8,10 @@ var makeNewButton = document.querySelector('.make-new-button');
 var homeButton = document.querySelector('.home-button');
 var formView = document.querySelector('.form-view');
 var homeView = document.querySelector('.home-view');
-var randomCoverButton = document.querySelector('.random-cover-button');
 var saveCoverButton = document.querySelector('.save-cover-button');
 var viewSavedButton = document.querySelector('.view-saved-button');
 var savedView = document.querySelector('.saved-view');
+var makeMyBookButton = document.querySelector('.create-new-book-button');
 
 // We've provided a few variables below
 var savedCovers = [
@@ -25,11 +25,9 @@ randomCoverButton.addEventListener('click', getRandomCover);
 makeNewButton.addEventListener('click', showFormView);
 viewSavedButton.addEventListener('click', showSavedView);
 homeButton.addEventListener('click', showHomeView);
+makeMyBookButton.addEventListener('click', createNewCover);
 
 // Create your event handlers and other functions here 👇
-
-
-// We've provided two functions to get you started
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 };
@@ -78,4 +76,38 @@ function showHomeView() {
   hideElements([formView, savedView])
   showElements([homeView, randomCoverButton, saveCoverButton])
   hideElements([homeButton])
+};
+
+function createNewCover(event) {
+  event.preventDefault();
+  var imgSrc = document.querySelector('.user-cover').value;
+  var title = document.querySelector('.user-title').value;
+  var descriptor1 = document.querySelector('.user-desc1').value;
+  var descriptor2 = document.querySelector('.user-desc2').value;
+  userInputArray(imgSrc, title, descriptor1, descriptor2);
+  currentCover = createCover(imgSrc, title, descriptor1, descriptor2)
+  displayCover()
+  showHomeView()
+};
+
+function userInputArray(imgSrc, title, descriptor1, descriptor2) {
+  if (!covers.includes(imgSrc)) {
+    covers.push(imgSrc);
+  }
+  if (!titles.includes(title)) {
+    titles.push(title);
+  }
+  if (!descriptors.includes(descriptor1)) {
+    descriptors.push(descriptor1);
+  }
+  if (!descriptors.includes(descriptor2)) {
+    descriptors.push(descriptor2);
+  }
+};
+
+function displayCover() {
+  coverImage.src = currentCover.coverImg;
+  coverTitle.innerText = currentCover.title;
+  coverDescriptors1.innerText = currentCover.tagline1;
+  coverDescriptors2.innerText = currentCover.tagline2;
 };
