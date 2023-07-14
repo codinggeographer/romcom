@@ -12,6 +12,8 @@ var saveCoverButton = document.querySelector('.save-cover-button');
 var viewSavedButton = document.querySelector('.view-saved-button');
 var savedView = document.querySelector('.saved-view');
 var makeMyBookButton = document.querySelector('.create-new-book-button');
+var savedCoverSection = document.querySelector('.saved-covers-section');
+
 
 // We've provided a few variables below
 var savedCovers = [
@@ -26,6 +28,7 @@ makeNewButton.addEventListener('click', showFormView);
 viewSavedButton.addEventListener('click', showSavedView);
 homeButton.addEventListener('click', showHomeView);
 makeMyBookButton.addEventListener('click', createNewCover);
+saveCoverButton.addEventListener('click', saveCover);
 
 // Create your event handlers and other functions here 👇
 function getRandomIndex(array) {
@@ -44,10 +47,12 @@ function createCover(imgSrc, title, descriptor1, descriptor2) {
 };
 
 function getRandomCover() {
-  coverImage.src = covers[getRandomIndex(covers)]
-  coverTitle.innerText = titles[getRandomIndex(titles)]
-  coverDescriptors1.innerText = descriptors[getRandomIndex(descriptors)]
-  coverDescriptors2.innerText = descriptors[getRandomIndex(descriptors)]
+  var image = covers[getRandomIndex(covers)]
+  var title = titles[getRandomIndex(titles)]
+  var descriptor1 = descriptors[getRandomIndex(descriptors)]
+  var descriptor2 = descriptors[getRandomIndex(descriptors)]
+  currentCover = createCover(image, title, descriptor1, descriptor2)
+  displayCover()
 };
 
 function showElements(elements) {
@@ -70,6 +75,7 @@ function showFormView() {
 function showSavedView() {
   hideElements([homeView, randomCoverButton, saveCoverButton])
   showElements([savedView, homeButton])
+  loadSavedCovers()
 };
 
 function showHomeView() {
@@ -110,4 +116,26 @@ function displayCover() {
   coverTitle.innerText = currentCover.title;
   coverDescriptors1.innerText = currentCover.tagline1;
   coverDescriptors2.innerText = currentCover.tagline2;
+};
+
+function saveCover() {
+  if (!savedCovers.includes(currentCover)){
+    savedCovers.push(currentCover)
+    console.log('saved covers')
+  }
+};
+
+function loadSavedCovers() {
+  console.log(savedCovers)
+  savedCoverSection.innerHTML = '';
+  for (var i = 0; i < savedCovers.length; i++){
+    savedCoverSection.innerHTML += `<section class= "saved-covers" id="${savedCovers[i].id}">
+    <img src="${savedCovers[i].coverImg}" 
+    alt="saved covers">
+    <h2>${savedCovers[i].title}</h2>
+    <h3>${savedCovers[i].tagline1}</h3>
+    <h3>${savedCovers[i].tagline2}</h3>
+  </section><br>`
+
+  }
 };
