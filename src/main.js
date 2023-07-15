@@ -14,7 +14,6 @@ var savedView = document.querySelector('.saved-view');
 var makeMyBookButton = document.querySelector('.create-new-book-button');
 var savedCoverSection = document.querySelector('.saved-covers-section');
 
-
 // We've provided a few variables below
 var savedCovers = [
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
@@ -29,6 +28,8 @@ viewSavedButton.addEventListener('click', showSavedView);
 homeButton.addEventListener('click', showHomeView);
 makeMyBookButton.addEventListener('click', createNewCover);
 saveCoverButton.addEventListener('click', saveCover);
+savedCoverSection.addEventListener('dblclick', function(event) {
+  deleteSavedPoster(event)});
 
 // Create your event handlers and other functions here 👇
 function getRandomIndex(array) {
@@ -121,21 +122,29 @@ function displayCover() {
 function saveCover() {
   if (!savedCovers.includes(currentCover)){
     savedCovers.push(currentCover)
-    console.log('saved covers')
   }
 };
 
 function loadSavedCovers() {
-  console.log(savedCovers)
   savedCoverSection.innerHTML = '';
-  for (var i = 0; i < savedCovers.length; i++){
-    savedCoverSection.innerHTML += `<section class= "saved-covers" id="${savedCovers[i].id}">
-    <img src="${savedCovers[i].coverImg}" 
-    alt="saved covers">
-    <h2>${savedCovers[i].title}</h2>
-    <h3>${savedCovers[i].tagline1}</h3>
-    <h3>${savedCovers[i].tagline2}</h3>
-  </section><br>`
+  savedCovers.forEach(function(savedCover) {
+    savedCoverSection.innerHTML += `
+      <section class="saved-view saved-covers-section">
+        <section class="mini-cover" id="${savedCover.id}">
+          <img class="cover-image" src="${savedCover.coverImg}"alt="saved covers">
+          <h2 class="cover-title">${savedCover.title}</h2>
+          <h3 class="tagline">A tale of <span>${savedCover.tagline1}</span> and <span>${savedCover.tagline2}</span></h3>
+        </section>
+      </section>
+    `
+  })
+};
 
+function deleteSavedPoster(event) {
+  for (var i = 0; i < savedCovers.length; i++) {
+    if (parseInt(event.target.closest('section').id) === savedCovers[i].id) {
+        savedCovers.splice(i, 1);
+    }
   }
+   loadSavedCovers()
 };
